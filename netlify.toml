@@ -1,0 +1,25 @@
+[build]
+  publish = "."
+
+# Activa compresión y larga cache para JS/CSS
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    cache-control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    cache-control = "public, max-age=31536000, immutable"
+
+# Cache más corta para imágenes (porque pueden cambiar)
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    cache-control = "public, max-age=2592000"
+
+# Opcional: HTML con cache muy corta para que refleje cambios
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    cache-control = "public, max-age=60"

@@ -1,0 +1,701 @@
+/* =====================
+   Ajuste: Eliminar scroll horizontal en toda la página
+   ===================== */
+html {
+  overflow-x: hidden;
+}
+
+/**
+ * @author Tu Nombre
+ * @date   26 de julio de 2025
+ *
+ * Hoja de estilos principal.
+ *
+ * ÍNDICE:
+ * 1. Variables Globales (:root)
+ * 2. Reseteo y Estilos Base
+ * 3. Clases de Utilidad y Componentes Genéricos
+ * 4. Header (Encabezado y Navegación)
+ * 5. Hero Section (Sección Principal)
+ * 6. Stats Section (Estadísticas)
+ * 7. Estilos de Sección Genéricos
+ * 8. Misión & Visión Section
+ * 9. Services Section (Servicios)
+ * 10. Process Section (Proceso)
+ * 11. Contact Form (Formulario de Contacto)
+ * 12. Footer (Pie de página)
+ * 13. Elementos Flotantes (Botón de WhatsApp)
+ * 14. Animaciones (Keyframes y Transiciones)
+ */
+
+/* ==========================================================================
+   1. Variables Globales (:root)
+   ========================================================================== */
+
+:root {
+  --primary: #1877f2;
+  --primary-dark: #0f5ecb;
+  --accent: #42b72a;
+  --text: #1c1e21;
+  --text-light: #606770;
+  --bg: #f0f2f5;
+  --white: #ffffff;
+  --bg-card: var(--white);
+
+  --max-width: 1200px;
+  --radius: 14px;
+  --transition: all 0.3s ease;
+  --header-height: 70px; /* ✅ Variable de altura del header */
+
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+/* ==========================================================================
+   2. Reseteo y Estilos Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  line-height: 1.6;
+  overflow-x: hidden; /* Evita el scroll horizontal */
+  padding-top: var(--header-height); /* Empuja el contenido para no ser tapado por el header */
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ==========================================================================
+   3. Clases de Utilidad y Componentes Genéricos
+   ========================================================================== */
+
+.container {
+  width: 90%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.9rem 1.6rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-align: center;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+/* ==========================================================================
+   4. Header (Encabezado y Navegación)
+   ========================================================================== */
+
+header {
+  background-color: var(--white);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.logo-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.logo-text {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--primary);
+}
+
+.menu {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.menu a {
+  font-weight: 500;
+  color: var(--text);
+  position: relative;
+}
+
+.menu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: width 0.25s;
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+.hamburger {
+  display: none; /* Oculto por defecto, visible en media query */
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 26px;
+  height: 3px;
+  background-color: var(--text);
+  transition: var(--transition);
+}
+
+@media (max-width: 768px) {
+  .menu {
+    position: absolute;
+    top: var(--header-height); /* Se alinea con la parte inferior del header */
+    right: 5%;
+    width: 90%;
+    max-width: 300px;
+    background-color: var(--white);
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+  }
+  .menu.open {
+    transform: translateY(10px);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* ==========================================================================
+   5. Hero Section (Sección Principal) - CORREGIDO
+   ========================================================================== */
+
+#hero {
+  background-color: var(--bg-card);
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(24, 119, 242, 0.06) 0%, rgba(66, 183, 42, 0.06) 100%);
+  z-index: -1;
+}
+
+/* --- ESTILOS BASE (MÓVIL) --- */
+/* El orden aquí es Título -> Slider -> Párrafo -> Botones */
+#hero .container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Todos los elementos de contenido deben tener z-index para estar sobre la curva */
+.hero-title,
+.hero-slider,
+.hero-paragraph,
+.button-group {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.hero-title, .hero-paragraph {
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: var(--primary-dark);
+}
+
+.hero-paragraph {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0 auto; /* Asegura el centrado si es más corto que el 100% */
+}
+
+.hero-slider {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.hero-slider .slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.hero-slider .slide.active { opacity: 1; }
+.hero-slider .slide img { width: 100%; height: 100%; object-fit: cover; }
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* --- CURVA SVG --- */
+#hero .curve {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 200px; /* Altura definida en el SVG */
+  pointer-events: none;
+  z-index: 1; /* Entre el fondo y el contenido */
+  top: 3em; /* ✅ AJUSTA ESTE VALOR para la posición en MÓVIL */
+}
+
+#curvePath {
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 1500;
+  animation: draw 2s ease-out 0.5s forwards, slideAlong 1.5s ease-in-out 3s forwards;
+}
+
+/* --- VISTA DE ESCRITORIO (≥ 768px) --- */
+@media (min-width: 768px) {
+  #hero { padding: 5rem 0; }
+
+  #hero .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 0 3rem;
+    align-items: center;
+  }
+  
+  /* Reordenamiento con Grid */
+  .hero-title     { grid-area: 1 / 1 / 2 / 2; margin-bottom: 1rem; }
+  .hero-paragraph { grid-area: 2 / 1 / 3 / 2; margin-bottom: 1.5rem; }
+  .button-group   { grid-area: 3 / 1 / 4 / 2; }
+  .hero-slider    { grid-area: 1 / 2 / 4 / 3; } /* El slider ocupa las 3 filas a la derecha */
+
+  .hero-title, .hero-paragraph {
+    text-align: left;
+  }
+  .button-group {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+  #hero .curve {
+    top: 1.5em; /* ✅ AJUSTA ESTE VALOR para la posición en ESCRITORIO */
+  }
+}
+
+/* --- ANIMACIONES KEYFRAMES --- */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes slideAlong {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -1500; }
+}
+
+
+/* ==========================================================================
+   6. Stats Section (Estadísticas)
+   ========================================================================== */
+
+#stats {
+  padding: 3rem 0;
+  background-color: var(--bg);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.stat-number {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   7. Estilos de Sección Genéricos
+   ========================================================================== */
+
+section {
+  padding: 4rem 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 2.8rem;
+}
+
+.section-title h2 {
+  font-size: 2rem;
+  color: var(--primary-dark);
+}
+
+.section-title p {
+  color: var(--text-light);
+  max-width: 650px;
+  margin: 0.7rem auto 0;
+}
+
+/* ==========================================================================
+   8. Misión & Visión Section
+   ========================================================================== */
+
+.mv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.mv-card {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  border-top: 6px solid var(--primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.mv-card h3 {
+  margin-bottom: 0.8rem;
+}
+
+/* ==========================================================================
+   9. Services Section (Servicios)
+   ========================================================================== */
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.service {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s;
+}
+
+.service:hover {
+  transform: translateY(-4px);
+}
+
+.service h3 {
+  margin-bottom: 0.6rem;
+  color: var(--primary-dark);
+}
+
+.service p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   10. Process Section (Proceso)
+   ========================================================================== */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  counter-reset: step;
+}
+
+.step {
+  background-color: var(--white);
+  padding: 1.8rem;
+  border-radius: var(--radius);
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  padding-top: 2.5rem; /* Espacio para el número */
+}
+
+.step::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  top: -16px;
+  left: 24px;
+  width: 40px;
+  height: 40px;
+  background-color: var(--accent);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   11. Contact Form (Formulario de Contacto)
+   ========================================================================== */
+
+form {
+  max-width: 650px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.2rem;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid #d3d6db;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  background-color: var(--white);
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.15);
+}
+
+.form-status, .form-message {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Ejemplo de mensaje de éxito */
+.form-message.success {
+  background-color: #e6ffed;
+  border: 1px solid #a2f5bf;
+  color: #0b3d0b;
+}
+
+/* Ejemplo de mensaje de error */
+.form-message.error {
+  background-color: #ffe6e6;
+  border: 1px solid #f5a2a2;
+  color: #5c0a0a;
+}
+
+/* ==========================================================================
+   12. Footer (Pie de página)
+   ========================================================================== */
+
+footer {
+  background-color: var(--primary-dark);
+  color: var(--white);
+  padding: 2.5rem 0;
+  margin-top: 3rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+footer h4 {
+  margin-bottom: 0.8rem;
+}
+
+footer a {
+  color: var(--white);
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+footer a:hover {
+  opacity: 1;
+}
+
+.footer-desc {
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 1.6rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+/* ==========================================================================
+   13. Elementos Flotantes (Botón de WhatsApp)
+   ========================================================================== */
+
+.whatsapp-btn {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 4rem;
+  height: 4rem;
+  background-color: #25d366; /* Verde WhatsApp */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+}
+
+.whatsapp-btn img {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* ==========================================================================
+   14. Animaciones (Keyframes y Transiciones)
+   ========================================================================== */
+
+/* Animación para revelar elementos al hacer scroll */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+[data-reveal].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animación de la curva SVG */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes slideAlong {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+/* =====================
+   Ajustes adicionales para vista MÓVIL
+   ===================== */
+@media (max-width: 768px) {
+  /* Hacer que el contenedor del header ocupe todo el ancho en móvil */
+  .container.nav {
+    width: 100%;
+    padding: 0 1rem;
+  }
+}
